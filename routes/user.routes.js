@@ -9,11 +9,7 @@ router.get(
     passport.authenticate('jwt', { session: false }),
     userControllers.getAllController,
 );
-router.get(
-    '/getByUsername/:username',
-    passport.authenticate('jwt', { session: false }),
-    userControllers.getByUsernameController,
-);
+router.get('/getByUsername/:username', userControllers.getByUsernameController);
 router.get(
     '/getById/:id',
     passport.authenticate('jwt', { session: false }),
