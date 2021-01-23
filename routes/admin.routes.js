@@ -1,29 +1,32 @@
 const { Router } = require('express');
 const passport = require('passport');
-const userControllers = require('../controllers/user.controllers');
+const adminControllers = require('../controllers/admin.controllers');
 const router = Router();
 
-router.post('/create', userControllers.createController);
+router.patch(
+    '/update/:id',
+    passport.authenticate('jwt', { session: false }),
+    adminControllers.updateController,
+);
 router.get(
     '/all',
     passport.authenticate('jwt', { session: false }),
-    userControllers.getAllController,
-);
-router.get(
-    '/getByUsername/:username',
-    passport.authenticate('jwt', { session: false }),
-    userControllers.getByUsernameController,
+    adminControllers.getAllController,
 );
 router.get(
     '/getById/:id',
     passport.authenticate('jwt', { session: false }),
-    userControllers.getByIdController,
+    adminControllers.getByIdController,
 );
-router.patch('/update/:id', userControllers.updateController);
+router.post(
+    '/registration',
+    passport.authenticate('jwt', { session: false }),
+    adminControllers.registrationController,
+);
 router.delete(
     '/delete/:id',
     passport.authenticate('jwt', { session: false }),
-    userControllers.removeController,
+    adminControllers.removeController,
 );
 
 module.exports = router;

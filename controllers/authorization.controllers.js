@@ -19,33 +19,15 @@ module.exports.loginController = async (req, res) => {
             return res.status(409).json({ message: 'Wrong password. Try again' });
         }
 
-        const token = jwt.sign({ adminId: admin._id, email: admin.email }, config.jwt, {
-            expiresIn: '1h',
-        });
+        const token = jwt.sign(
+            { adminId: admin._id, email: admin.email, username: admin.username },
+            config.jwt,
+            {
+                expiresIn: '1h',
+            },
+        );
 
-        res.status(200).json({ token: `Bearer ${token}` });
-    } catch (e) {
-        error(res, e);
-    }
-};
-
-module.exports.registrationController = async (req, res) => {
-    try {
-        const { email, password } = req.body;
-        const candidate = await Admin.findOne({ email });
-
-        if (candidate) {
-            return res
-                .status(409)
-                .json({ message: 'This email is already in use. Enter another email' });
-        }
-
-        const hashedPassword = await bcrypt.hashSync(password, 12);
-        const admin = new Admin({ email, password: hashedPassword });
-
-        await admin.save();
-
-        res.status(201).json({ message: 'Admin successfully created' });
+        res.status(200).json({ response: 'logged in', token: `Bearer ${token}` });
     } catch (e) {
         error(res, e);
     }
