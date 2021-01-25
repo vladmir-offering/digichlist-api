@@ -1,6 +1,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
+const helmet = require('helmet');
 const morgan = require('morgan');
 const passport = require('passport');
 const AuthorizationRouter = require('./routes/authorization.routes');
@@ -18,6 +19,7 @@ app.use(morgan('dev'));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(cors());
+app.use(helmet());
 
 app.use('/api/authorization', AuthorizationRouter);
 app.use('/api/user', UserRouter);

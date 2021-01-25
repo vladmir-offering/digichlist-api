@@ -13,6 +13,10 @@ const defectSchema = new Schema({
         type: String,
         default: '',
     },
+    attachment_id: {
+        type: String,
+        default: '',
+    },
     user: {
         ref: 'User',
         type: Schema.Types.ObjectId,
