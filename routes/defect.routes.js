@@ -1,15 +1,17 @@
 const { Router } = require('express');
 const passport = require('passport');
+const { defectValidators } = require('../utils/validators.utils');
 const defectControllers = require('../controllers/defect.controllers');
 const router = Router();
 
 // POST http://localhost:5000/api/defect/create
-router.post('/create', defectControllers.createController);
+router.post('/create', defectValidators, defectControllers.createController);
 
 // PATCH Protected JWT Web Token http://localhost:5000/api/defect/update/:id
 router.patch(
     '/update/:id',
     passport.authenticate('jwt', { session: false }),
+    defectValidators,
     defectControllers.updateController,
 );
 

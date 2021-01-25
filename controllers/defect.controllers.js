@@ -1,5 +1,6 @@
 const Defect = require('../models/Defect');
 const User = require('../models/User');
+const { validationResult } = require('express-validator');
 const error = require('../utils/error-handler.utils');
 
 module.exports.getAllController = async (req, res) => {
@@ -96,6 +97,15 @@ module.exports.getByUserController = async (req, res) => {
 };
 
 module.exports.createController = async (req, res) => {
+    const errors = validationResult(req);
+
+    if (!errors.isEmpty()) {
+        return res.status(400).json({
+            errors: errors.array(),
+            message: 'Incorrect new defect data',
+        });
+    }
+
     try {
         const {
             username,
@@ -148,6 +158,15 @@ module.exports.createController = async (req, res) => {
 };
 
 module.exports.updateController = async (req, res) => {
+    const errors = validationResult(req);
+
+    if (!errors.isEmpty()) {
+        return res.status(400).json({
+            errors: errors.array(),
+            message: 'Incorrect defect data',
+        });
+    }
+
     try {
         const {
             title,
