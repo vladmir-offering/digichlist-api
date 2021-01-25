@@ -29,8 +29,12 @@ module.exports.getByIdController = async (req, res) => {
 };
 
 module.exports.getByStatusController = async (req, res) => {
+    const query = {
+        status: req.query.status,
+    };
+
     try {
-        const defects = await Defect.find({ status: req.params.status });
+        const defects = await Defect.find(query);
         res.status(200).json({
             response: 'ok',
             message: defects.length
@@ -45,7 +49,7 @@ module.exports.getByStatusController = async (req, res) => {
 
 module.exports.getByDateController = async (req, res) => {
     const query = {
-        status: 'open',
+        status: req.query.status,
     };
 
     if (req.query.start) {
@@ -67,8 +71,8 @@ module.exports.getByDateController = async (req, res) => {
         res.status(200).json({
             response: 'ok',
             message: defects.length
-                ? 'Found open defects for today'
-                : 'No open defects found today',
+                ? 'All defects were found according to the specified status and time interval'
+                : 'No defects were found for the specified status and time interval',
             defects,
         });
     } catch (e) {
@@ -93,7 +97,16 @@ module.exports.getByUserController = async (req, res) => {
 
 module.exports.createController = async (req, res) => {
     try {
-        const { username, title, room, status, open_date, close_date, attachment } = req.body;
+        const {
+            username,
+            title,
+            room,
+            status,
+            open_date,
+            close_date,
+            attachment,
+            attachment_id,
+        } = req.body;
         const user = await User.findOne({ username });
 
         if (!user) {
@@ -115,6 +128,7 @@ module.exports.createController = async (req, res) => {
             title,
             room,
             attachment: attachment ? attachment : '',
+            attachment_id: attachment_id ? attachment_id : '',
             user: user._id,
             status,
             open_date: open_date ? open_date : Date.now(),
@@ -135,11 +149,21 @@ module.exports.createController = async (req, res) => {
 
 module.exports.updateController = async (req, res) => {
     try {
-        const { title, room, status, open_date, close_date, attachment, user } = req.body;
+        const {
+            title,
+            room,
+            status,
+            open_date,
+            close_date,
+            attachment,
+            attachment_id,
+            user,
+        } = req.body;
         const updated = new Defect({
             title,
             room,
             attachment: attachment ? attachment : '',
+            attachment_id: attachment_id ? attachment_id : '',
             user,
             status,
             open_date: open_date ? open_date : Date.now(),
