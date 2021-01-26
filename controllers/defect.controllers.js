@@ -48,23 +48,23 @@ module.exports.getByStatusController = async (req, res) => {
     }
 };
 
-module.exports.getByDateController = async (req, res) => {
+module.exports.getByDateAndStatusController = async (req, res) => {
     const query = {
         status: req.query.status,
     };
 
     if (req.query.start) {
-        query.open_date = {
+        query[req.query.date_type] = {
             $gte: req.query.start,
         };
     }
 
     if (req.query.end) {
-        if (!query.open_date) {
-            query.open_date = {};
+        if (!query[req.query.date_type]) {
+            query[req.query.date_type] = {};
         }
 
-        query.open_date['$lte'] = req.query.end;
+        query[req.query.date_type]['$lte'] = req.query.end;
     }
 
     try {
@@ -201,6 +201,33 @@ module.exports.updateController = async (req, res) => {
             message: defect ? 'Defect was successfully updated' : 'Defect not updated',
             defect,
         });
+    } catch (e) {
+        error(res, e);
+    }
+};
+
+module.exports.removeByDateAndStatusController = async (req, res) => {
+    const query = {
+        status: req.query.status,
+    };
+
+    if (req.query.start) {
+        query[req.query.date_type] = {
+            $gte: req.query.start,
+        };
+    }
+
+    if (req.query.end) {
+        if (!query[req.query.date_type]) {
+            query[req.query.date_type] = {};
+        }
+
+        query[req.query.date_type]['$lte'] = req.query.end;
+    }
+
+    try {
+        await Defect.remove(query);
+        res.status(200).json({ response: 'ok', message: 'Defects has been deleted' });
     } catch (e) {
         error(res, e);
     }
