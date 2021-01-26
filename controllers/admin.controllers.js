@@ -3,6 +3,15 @@ const Admin = require('../models/Admin');
 const { validationResult } = require('express-validator');
 const error = require('../utils/error-handler.utils');
 
+async function checkIsPasswordNew(req) {
+    const { password, changed } = req.body;
+    if (changed) {
+        return bcrypt.hashSync(password, 12);
+    } else {
+        return password;
+    }
+}
+
 module.exports.getAllController = async (req, res) => {
     try {
         const admins = await Admin.find({});
@@ -82,11 +91,11 @@ module.exports.updateController = async (req, res) => {
     }
 
     try {
-        const hashedPassword = await bcrypt.hashSync(req.body.password, 12);
+        const password = await checkIsPasswordNew(req);
 
         const updated = new Admin({
             email: req.body.email,
-            password: hashedPassword,
+            password,
             username: req.body.username,
             _id: req.params.id,
         });

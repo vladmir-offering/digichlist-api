@@ -16,7 +16,7 @@ exports.loginValidators = [
         .matches(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/),
 ];
 
-exports.registrationValidators = [
+exports.registrationCreateValidators = [
     body('email')
         .isEmail()
         .notEmpty()
@@ -35,6 +35,26 @@ exports.registrationValidators = [
         .isLength({ min: 8, max: 50 })
         .withMessage('Not correct password. Minimum length 8 symbols')
         .matches(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/),
+];
+
+exports.registrationUpdateValidators = [
+    body('email')
+        .isEmail()
+        .notEmpty()
+        .withMessage('Not correct email!')
+        .matches(
+            /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
+        )
+        .normalizeEmail(),
+    body('username')
+        .notEmpty()
+        .isLength({ min: 5, max: 20 })
+        .withMessage('Not correct username. Minimum length 5 symbols')
+        .matches(/^(?=[a-zA-Z0-9._]{6,20}$)(?!.*[_.]{2})[^_.].*[^_.]$/),
+    body('password')
+        .notEmpty()
+        .isLength({ min: 8 })
+        .withMessage('Not correct password. Minimum length 8 symbols'),
 ];
 
 exports.userValidators = [
