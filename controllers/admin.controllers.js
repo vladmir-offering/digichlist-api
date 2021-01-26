@@ -1,5 +1,6 @@
 const bcrypt = require('bcryptjs');
 const Admin = require('../models/Admin');
+const { validationResult } = require('express-validator');
 const error = require('../utils/error-handler.utils');
 
 module.exports.getAllController = async (req, res) => {
@@ -29,6 +30,15 @@ module.exports.getByIdController = async (req, res) => {
 };
 
 module.exports.registrationController = async (req, res) => {
+    const errors = validationResult(req);
+
+    if (!errors.isEmpty()) {
+        return res.status(400).json({
+            errors: errors.array(),
+            message: 'Incorrect registration information',
+        });
+    }
+
     try {
         const { email, password, username } = req.body;
         const candidateEmail = await Admin.findOne({ email });
@@ -62,6 +72,15 @@ module.exports.registrationController = async (req, res) => {
 };
 
 module.exports.updateController = async (req, res) => {
+    const errors = validationResult(req);
+
+    if (!errors.isEmpty()) {
+        return res.status(400).json({
+            errors: errors.array(),
+            message: 'Incorrect admin data',
+        });
+    }
+
     try {
         const hashedPassword = await bcrypt.hashSync(req.body.password, 12);
 
