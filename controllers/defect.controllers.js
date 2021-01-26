@@ -206,6 +206,15 @@ module.exports.updateController = async (req, res) => {
     }
 };
 
+module.exports.removeController = async (req, res) => {
+    try {
+        await Defect.remove({ _id: req.params.id });
+        res.status(200).json({ response: 'ok', message: 'Defect has been deleted' });
+    } catch (e) {
+        error(res, e);
+    }
+};
+
 module.exports.removeByDateAndStatusController = async (req, res) => {
     const query = {
         status: req.query.status,

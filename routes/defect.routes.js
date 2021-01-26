@@ -46,11 +46,18 @@ router.get(
     defectControllers.getByUserController,
 );
 
-// DELETE http://localhost:5000/api/defect/delete?status=DefectStatus&date_type=open_date/close_date&start=StartDate&end=EndDate
+// DELETE Protected JWT Web Token http://localhost:5000/api/defect/delete?status=DefectStatus&date_type=open_date/close_date&start=StartDate&end=EndDate
 router.delete(
     '/deleteByDateAndStatus',
     passport.authenticate('jwt', { session: false }),
     defectControllers.removeByDateAndStatusController,
+);
+
+// DELETE Protected JWT Web Token http://localhost:5000/api/defect/delete/:id
+router.delete(
+    '/delete/:id',
+    passport.authenticate('jwt', { session: false }),
+    defectControllers.removeController,
 );
 
 module.exports = router;
