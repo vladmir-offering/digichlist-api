@@ -1,6 +1,9 @@
 const { Router } = require('express');
 const passport = require('passport');
-const { registrationValidators } = require('../utils/validators.utils');
+const {
+    registrationCreateValidators,
+    registrationUpdateValidators,
+} = require('../utils/validators.utils');
 const adminControllers = require('../controllers/admin.controllers');
 const router = Router();
 
@@ -8,7 +11,7 @@ const router = Router();
 router.patch(
     '/update/:id',
     passport.authenticate('jwt', { session: false }),
-    registrationValidators,
+    registrationUpdateValidators,
     adminControllers.updateController,
 );
 
@@ -30,7 +33,7 @@ router.get(
 router.post(
     '/registration',
     passport.authenticate('jwt', { session: false }),
-    registrationValidators,
+    registrationCreateValidators,
     adminControllers.registrationController,
 );
 
