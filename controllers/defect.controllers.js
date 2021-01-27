@@ -108,16 +108,7 @@ module.exports.createController = async (req, res) => {
     }
 
     try {
-        const {
-            username,
-            title,
-            room,
-            status,
-            open_date,
-            attachment,
-            attachment_id,
-            priority,
-        } = req.body;
+        const { username, title, room, open_date, attachment, attachment_id } = req.body;
         const user = await User.findOne({ username });
 
         if (!user) {
@@ -138,11 +129,10 @@ module.exports.createController = async (req, res) => {
         const defect = new Defect({
             title,
             room,
-            status,
-            priority,
+            attachment,
+            attachment_id,
             user: user._id,
-            attachment: attachment ? attachment : '',
-            attachment_id: attachment_id ? attachment_id : '',
+            status: 'open',
             open_date: open_date ? open_date : Date.now(),
         });
 
@@ -223,14 +213,14 @@ module.exports.updateController = async (req, res) => {
         const updated = new Defect({
             title,
             room,
+            attachment,
+            attachment_id,
             user,
             status,
             priority,
-            attachment: attachment ? attachment : '',
-            attachment_id: attachment_id ? attachment_id : '',
-            open_date: open_date ? open_date : Date.now(),
-            close_date: close_date ? close_date : '',
-            close_reason: close_reason ? close_reason : '',
+            close_date,
+            close_reason,
+            open_date,
             _id: req.params.id,
         });
 

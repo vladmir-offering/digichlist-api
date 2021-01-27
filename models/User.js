@@ -3,11 +3,11 @@ const { Schema, model } = require('mongoose');
 const userSchema = new Schema({
     first_name: {
         type: String,
-        required: true,
+        default: '',
     },
     last_name: {
         type: String,
-        required: true,
+        default: '',
     },
     username: {
         type: String,
@@ -17,7 +17,6 @@ const userSchema = new Schema({
     position: {
         type: String,
         enum: ['Cleaner', 'Repairer', 'None'],
-        default: 'None',
     },
     chat_id: {
         type: String,

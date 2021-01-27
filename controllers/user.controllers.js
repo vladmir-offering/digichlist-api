@@ -71,6 +71,7 @@ module.exports.createController = async (req, res) => {
             first_name,
             last_name,
             username,
+            position: 'None',
             chat_id,
             enabled: false,
         });
