@@ -1,0 +1,123 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "version": "1.0.0",
+        "title": "digichlist API",
+        "description": "The digichlist - it's a Telegram Bot developed for IF-DC SS. This api is necessary for the work of the whole project, which includes not only the telegram of the bot, but also a web application for the administration. The purpose of API is to process operations performed using the bot's telegrams and the admin panel. Api stores, processes and retrieves information from the connected and configured MongoDB database.",
+        "license": {
+            "name": "Licensed Under MIT",
+            "url": "https://opensource.org/licenses/MIT"
+        }
+    },
+    "host": "localhost:5000",
+    "basePath": "/api/",
+    "schemes": ["https", "http"],
+    "tags": [
+        {
+            "name": "Authorization",
+            "description": "API to authorize administrators in the web application"
+        },
+        {
+            "name": "Admins",
+            "description": "API for operations with the entity of administrators in the web application"
+        },
+        {
+            "name": "Users",
+            "description": "API for registration and login of new users via telegram bot and operations with this entity on the side of the web application"
+        },
+        {
+            "name": "Defects",
+            "description": "API to create a new defect via telegram bot and view all defects by status and set date, as well as for operations on the side of the web application"
+        }
+    ],
+    "consumes": ["application/json"],
+    "produces": ["application/json"],
+    "paths": {
+        "/admin/all": {
+            "get": {
+                "summary": "Get all admins in system",
+                "description": "",
+                "tags": ["Admins"],
+                "produces": ["application/json"],
+                "parameters": [],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "object",
+                            "default": {},
+                            "$ref": "#/definitions/adminGetAllResponse"
+                        }
+                    },
+                    "401": {
+                        "description": "Error: Unauthorized. Protected JWT Web Token"
+                    },
+                    "500": {
+                        "description": "Error",
+                        "schema": {
+                            "default": {},
+                            "$ref": "#/definitions/Error"
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "adminGetAllResponse": {
+            "required": ["response", "message"],
+            "properties": {
+                "response": {
+                    "default": "ok",
+                    "type": "string"
+                },
+                "message": {
+                    "default": "Admins found",
+                    "type": "string"
+                },
+                "admins": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/Admin"
+                    }
+                }
+            }
+        },
+        "Admin": {
+            "required": ["email", "username", "password"],
+            "properties": {
+                "_id": {
+                    "type": "integer",
+                    "uniqueItems": true
+                },
+                "email": {
+                    "default": "admin1admin@gmail.com",
+                    "type": "string",
+                    "uniqueItems": true
+                },
+                "username": {
+                    "default": "admin1admin",
+                    "type": "string",
+                    "uniqueItems": true
+                },
+                "password": {
+                    "default": "123456789Qwertyuiop",
+                    "type": "string"
+                }
+            }
+        },
+        "Error": {
+            "required": ["success", "message"],
+            "properties": {
+                "success": {
+                    "default": false,
+                    "type": "boolean"
+                },
+                "message": {
+                    "default": "Error message",
+                    "type": "string"
+                }
+            }
+        }
+    }
+}

@@ -4,6 +4,8 @@ const cors = require('cors');
 const helmet = require('helmet');
 const morgan = require('morgan');
 const passport = require('passport');
+const swaggerUi = require('swagger-ui-express'),
+    swaggerDocument = require('./swagger.json');
 const AuthorizationRouter = require('./routes/authorization.routes');
 const AdminRouter = require('./routes/admin.routes');
 const UserRouter = require('./routes/user.routes');
@@ -21,6 +23,7 @@ app.use(bodyParser.urlencoded({ limit: '50mb', extended: true, parameterLimit: 5
 app.use(cors());
 app.use(helmet());
 
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 app.use('/api/authorization', AuthorizationRouter);
 app.use('/api/user', UserRouter);
 app.use('/api/defect', DefectRouter);
