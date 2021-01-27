@@ -65,13 +65,13 @@ module.exports.createController = async (req, res) => {
     }
 
     try {
-        const { first_name, last_name, username, position, chat_id } = req.body;
+        const { first_name, last_name, username, chat_id } = req.body;
 
         const user = new User({
             first_name,
             last_name,
             username,
-            position,
+            position: 'None',
             chat_id,
             enabled: false,
         });

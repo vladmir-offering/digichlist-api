@@ -32,14 +32,12 @@ const defectSchema = new Schema({
     },
     priority: {
         type: Number,
-        required: true,
-        default: 1,
+        default: 4,
         min: 1,
         max: 4,
     },
     open_date: {
         type: Date,
-        default: Date.now,
         required: true,
     },
     close_date: {
