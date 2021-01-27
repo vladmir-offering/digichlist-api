@@ -24,7 +24,7 @@ const defectSchema = new Schema({
     status: {
         type: String,
         enum: ['open', 'fixing', 'solved'],
-        required: true,
+        default: 'open',
     },
     close_reason: {
         type: String,
@@ -38,7 +38,7 @@ const defectSchema = new Schema({
     },
     open_date: {
         type: Date,
-        required: true,
+        default: Date.now,
     },
     close_date: {
         type: Date,

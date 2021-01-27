@@ -24,7 +24,7 @@ router.get(
     defectControllers.getAllController,
 );
 
-// GET http://localhost:5000/api/defect/getByDate?status=DefectStatus&date_type=open_date/close_date&start=StartDate&end=EndDate
+// GET http://localhost:5000/api/defect/getByDateAndStatus?status=DefectStatus&date_type=open_date/close_date&start=StartDate&end=EndDate
 router.get('/getByDateAndStatus', defectControllers.getByDateAndStatusController);
 
 // GET Protected JWT Web Token http://localhost:5000/api/defect/getByStatus?status=DefectStatus
@@ -41,7 +41,7 @@ router.get(
     defectControllers.getByUserController,
 );
 
-// DELETE Protected JWT Web Token http://localhost:5000/api/defect/delete?status=DefectStatus&date_type=open_date/close_date&start=StartDate&end=EndDate
+// DELETE Protected JWT Web Token http://localhost:5000/api/defect/deleteByDateAndStatus?status=DefectStatus&date_type=open_date/close_date&start=StartDate&end=EndDate
 router.delete(
     '/deleteByDateAndStatus',
     passport.authenticate('jwt', { session: false }),
