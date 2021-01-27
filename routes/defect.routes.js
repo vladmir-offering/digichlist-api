@@ -8,12 +8,7 @@ const router = Router();
 router.post('/create', defectValidators, defectControllers.createController);
 
 // PATCH Protected JWT Web Token http://localhost:5000/api/defect/update/:id
-router.patch(
-    '/update/:id',
-    passport.authenticate('jwt', { session: false }),
-    defectValidators,
-    defectControllers.updateController,
-);
+router.patch('/update/:id', defectValidators, defectControllers.updateController);
 
 // GET Protected JWT Web Token http://localhost:5000/api/defect/getById/:id
 router.get(

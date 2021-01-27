@@ -14,6 +14,15 @@ const userSchema = new Schema({
         required: true,
         unique: true,
     },
+    position: {
+        type: String,
+        enum: ['Cleaner', 'Repairer'],
+        required: true,
+    },
+    chat_id: {
+        type: String,
+        required: true,
+    },
     enabled: {
         type: Boolean,
         required: true,

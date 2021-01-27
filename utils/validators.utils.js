@@ -61,6 +61,8 @@ exports.userValidators = [
     body('first_name').notEmpty().withMessage('Not correct first name').trim(),
     body('username').notEmpty().isNumeric().withMessage('Not correct username'),
     body('last_name').notEmpty().withMessage('Not correct last name').trim(),
+    body('position').notEmpty().withMessage('Not correct position').trim(),
+    body('chat_id').notEmpty().withMessage('Not correct chat id').trim(),
 ];
 
 exports.defectValidators = [

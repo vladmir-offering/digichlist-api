@@ -26,6 +26,17 @@ const defectSchema = new Schema({
         enum: ['open', 'fixing', 'solved'],
         required: true,
     },
+    close_reason: {
+        type: String,
+        default: '',
+    },
+    priority: {
+        type: Number,
+        required: true,
+        default: 1,
+        min: 1,
+        max: 4,
+    },
     open_date: {
         type: Date,
         default: Date.now,

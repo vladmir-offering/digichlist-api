@@ -17,6 +17,13 @@ router.get(
 // GET http://localhost:5000/api/user/getByUsername/:username
 router.get('/getByUsername/:username', userControllers.getByUsernameController);
 
+// GET http://localhost:5000/api/user/getByPosition/:position
+router.get(
+    '/getByPosition/:position',
+    passport.authenticate('jwt', { session: false }),
+    userControllers.getByPositionController,
+);
+
 // GET Protected JWT Web Token http://localhost:5000/api/user/getById/:id
 router.get(
     '/getById/:id',

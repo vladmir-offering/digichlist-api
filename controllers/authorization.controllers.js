@@ -37,7 +37,11 @@ module.exports.loginController = async (req, res) => {
             },
         );
 
-        res.status(200).json({ response: 'logged in', token: `Bearer ${token}` });
+        res.status(200).json({
+            response: 'logged in',
+            token: `Bearer ${token}`,
+            admin: admin.username,
+        });
     } catch (e) {
         error(res, e);
     }
