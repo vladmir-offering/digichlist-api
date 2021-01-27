@@ -28,6 +28,19 @@ module.exports.getByUsernameController = async (req, res) => {
     }
 };
 
+module.exports.getByPositionController = async (req, res) => {
+    try {
+        const users = await User.findOne({ position: req.params.position.toString() });
+        res.status(200).json({
+            response: 'ok',
+            message: users.length ? 'Users found' : 'No users',
+            users,
+        });
+    } catch (e) {
+        error(res, e);
+    }
+};
+
 module.exports.getByIdController = async (req, res) => {
     try {
         const user = await User.findById(req.params.id);
@@ -52,12 +65,14 @@ module.exports.createController = async (req, res) => {
     }
 
     try {
-        const { first_name, last_name, username } = req.body;
+        const { first_name, last_name, username, position, chat_id } = req.body;
 
         const user = new User({
             first_name,
             last_name,
             username,
+            position,
+            chat_id,
             enabled: false,
         });
 
@@ -88,6 +103,8 @@ module.exports.updateController = async (req, res) => {
             first_name: req.body.first_name,
             last_name: req.body.last_name,
             username: req.body.username,
+            position: req.body.position,
+            chat_id: req.body.chat_id,
             enabled: req.body.enabled,
             _id: req.params.id,
         });

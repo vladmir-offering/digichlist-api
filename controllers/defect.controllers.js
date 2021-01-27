@@ -1,5 +1,6 @@
 const Defect = require('../models/Defect');
 const User = require('../models/User');
+const Admin = require('../models/Admin');
 const { validationResult } = require('express-validator');
 const error = require('../utils/error-handler.utils');
 
@@ -113,9 +114,9 @@ module.exports.createController = async (req, res) => {
             room,
             status,
             open_date,
-            close_date,
             attachment,
             attachment_id,
+            priority,
         } = req.body;
         const user = await User.findOne({ username });
 
@@ -137,12 +138,12 @@ module.exports.createController = async (req, res) => {
         const defect = new Defect({
             title,
             room,
+            status,
+            priority,
+            user: user._id,
             attachment: attachment ? attachment : '',
             attachment_id: attachment_id ? attachment_id : '',
-            user: user._id,
-            status,
             open_date: open_date ? open_date : Date.now(),
-            close_date: close_date ? close_date : '',
         });
 
         await defect.save();
@@ -176,17 +177,60 @@ module.exports.updateController = async (req, res) => {
             close_date,
             attachment,
             attachment_id,
+            priority,
+            close_reason,
+            admin_username,
             user,
         } = req.body;
+
+        if (user && !admin_username) {
+            const repairer = await User.findOne({ _id: user });
+
+            if (!repairer) {
+                return res.status(404).json({
+                    response: 'noUser',
+                    message:
+                        'The user is not in the system. To update the defect information, you must register and gain access.',
+                });
+            }
+
+            if (repairer && repairer.position !== 'Repairer') {
+                return res.status(403).json({
+                    response: 'notRepairer',
+                    message: 'This user is not in a position to update the defect information',
+                });
+            }
+
+            if (repairer && !repairer.enabled) {
+                return res.status(403).json({
+                    response: 'noAccess',
+                    message: 'This user does not have access to update the defect information',
+                });
+            }
+        }
+
+        if (user && admin_username) {
+            const admin = await Admin.findOne({ username: admin_username });
+
+            if (!admin) {
+                return res.status(401).json({
+                    response: 'noAccess',
+                    message: 'This user does not have access to update the defect information',
+                });
+            }
+        }
+
         const updated = new Defect({
             title,
             room,
-            attachment: attachment ? attachment : '',
-            attachment_id: attachment_id ? attachment_id : '',
             user,
             status,
+            priority,
+            attachment: attachment ? attachment : '',
+            attachment_id: attachment_id ? attachment_id : '',
             open_date: open_date ? open_date : Date.now(),
             close_date: close_date ? close_date : '',
+            close_reason: close_reason ? close_reason : '',
             _id: req.params.id,
         });
 
