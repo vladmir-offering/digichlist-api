@@ -10,6 +10,7 @@ const AuthorizationRouter = require('./routes/authorization.routes');
 const AdminRouter = require('./routes/admin.routes');
 const UserRouter = require('./routes/user.routes');
 const DefectRouter = require('./routes/defect.routes');
+const ChecklistRouter = require('./routes/checklist.routes');
 const errorHandler = require('./middleware/errors.middleware');
 
 const app = express();
@@ -25,9 +26,10 @@ app.use(helmet());
 
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 app.use('/api/authorization', AuthorizationRouter);
+app.use('/api/admin', AdminRouter);
 app.use('/api/user', UserRouter);
 app.use('/api/defect', DefectRouter);
-app.use('/api/admin', AdminRouter);
+app.use('/api/checklist', ChecklistRouter);
 app.use(errorHandler);
 
 module.exports = app;

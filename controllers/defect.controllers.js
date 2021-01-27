@@ -69,7 +69,7 @@ module.exports.getByDateAndStatusController = async (req, res) => {
     }
 
     try {
-        const defects = await Defect.find(query).sort({ open_date: -1 });
+        const defects = await Defect.find(query).sort({ [req.query.date_type]: -1 });
         res.status(200).json({
             response: 'ok',
             message: defects.length
@@ -132,8 +132,7 @@ module.exports.createController = async (req, res) => {
             attachment,
             attachment_id,
             user: user._id,
-            status: 'open',
-            open_date: open_date ? open_date : Date.now(),
+            open_date,
         });
 
         await defect.save();

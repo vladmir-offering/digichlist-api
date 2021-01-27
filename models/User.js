@@ -17,6 +17,7 @@ const userSchema = new Schema({
     position: {
         type: String,
         enum: ['Cleaner', 'Repairer', 'None'],
+        default: 'None',
     },
     chat_id: {
         type: String,
@@ -24,7 +25,6 @@ const userSchema = new Schema({
     },
     enabled: {
         type: Boolean,
-        required: true,
         default: false,
     },
 });

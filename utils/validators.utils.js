@@ -70,3 +70,9 @@ exports.defectValidators = [
     body('status').notEmpty().withMessage('Not correct status').trim(),
     body('open_date').notEmpty().withMessage('Not correct open date').isDate(),
 ];
+
+exports.checklistValidators = [
+    body('checklist').notEmpty().withMessage('Not correct checklist number').trim().isNumeric(),
+    body('note').notEmpty().withMessage('Not correct note').trim().isLength({ min: 5 }),
+    body('list').notEmpty().withMessage('Not correct list').isArray(),
+];
