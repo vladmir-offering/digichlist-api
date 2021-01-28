@@ -1,5 +1,6 @@
 const Order = require('../models/Order');
 const User = require('../models/User');
+const { validationResult } = require('express-validator');
 const error = require('../utils/error-handler.utils');
 
 module.exports.getAllController = async (req, res) => {
@@ -44,7 +45,7 @@ module.exports.getByIdController = async (req, res) => {
     }
 };
 
-module.exports.getByUserController = async (req, res) => {
+module.exports.getByUserIdController = async (req, res) => {
     try {
         const orders = await Order.find({ user: req.params.userId });
         res.status(200).json({
@@ -59,7 +60,32 @@ module.exports.getByUserController = async (req, res) => {
     }
 };
 
+module.exports.getByUsernameController = async (req, res) => {
+    try {
+        const user = await User.findOne({ username: req.params.username });
+        const orders = await Order.find({ user: user._id });
+        res.status(200).json({
+            response: 'ok',
+            message: orders.length
+                ? 'Orders found by username'
+                : 'No orders were found for this username',
+            orders,
+        });
+    } catch (e) {
+        error(res, e);
+    }
+};
+
 module.exports.createController = async (req, res) => {
+    const errors = validationResult(req);
+
+    if (!errors.isEmpty()) {
+        return res.status(400).json({
+            errors: errors.array(),
+            message: 'Incorrect new order data',
+        });
+    }
+
     try {
         const { username, title, note, quantity } = req.body;
         const user = await User.findOne({ username });
@@ -99,6 +125,15 @@ module.exports.createController = async (req, res) => {
 };
 
 module.exports.updateController = async (req, res) => {
+    const errors = validationResult(req);
+
+    if (!errors.isEmpty()) {
+        return res.status(400).json({
+            errors: errors.array(),
+            message: 'Incorrect new order data',
+        });
+    }
+
     try {
         const { title, note, quantity, date, user, done } = req.body;
 
@@ -132,6 +167,33 @@ module.exports.removeController = async (req, res) => {
     try {
         await Order.remove({ _id: req.params.id });
         res.status(200).json({ response: 'ok', message: 'Order has been deleted' });
+    } catch (e) {
+        error(res, e);
+    }
+};
+
+module.exports.removeDoneByDateController = async (req, res) => {
+    const query = {
+        done: true,
+    };
+
+    if (req.query.start) {
+        query.date = {
+            $gte: req.query.start,
+        };
+    }
+
+    if (req.query.end) {
+        if (!query.date) {
+            query.date = {};
+        }
+
+        query.date['$lte'] = req.query.end;
+    }
+
+    try {
+        await Order.remove(query);
+        res.status(200).json({ response: 'ok', message: 'Orders has been deleted' });
     } catch (e) {
         error(res, e);
     }
