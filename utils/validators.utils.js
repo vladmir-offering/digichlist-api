@@ -124,14 +124,7 @@ exports.userValidators = [
         .withMessage('Username must be type string')
         .trim(),
     body('enabled').isBoolean().withMessage('Enabled must be boolean type').trim(),
-    body('position')
-        .isString()
-        .withMessage('Position must be type string')
-        .equals('Cleaner' || 'Repairer' || 'None')
-        .withMessage(
-            'The position field can only contain the following values - Cleaner, Repairer, None',
-        )
-        .trim(),
+    body('position').isString().withMessage('Position must be type string').trim(),
 ];
 
 exports.defectValidators = [
@@ -151,14 +144,7 @@ exports.defectValidators = [
         .isLength({ min: 1, max: 20 })
         .withMessage('Min room length is 1 symbols. Max - 20 symbols')
         .trim(),
-    body('status')
-        .isString()
-        .withMessage('Status must be type string')
-        .equals('open' || 'fixing' || 'solved')
-        .withMessage(
-            'The status field can only contain the following values - open, fixing, solved',
-        )
-        .trim(),
+    body('status').isString().withMessage('Status must be type string').trim(),
     body('open_date').isDate().withMessage('Date must be in format 2021-01-01').trim(),
     body('close_reason')
         .isString()
