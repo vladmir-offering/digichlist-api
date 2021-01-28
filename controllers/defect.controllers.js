@@ -108,7 +108,7 @@ module.exports.createController = async (req, res) => {
     }
 
     try {
-        const { username, title, room, open_date, attachment, attachment_id } = req.body;
+        const { username, title, room, attachment, attachment_id } = req.body;
         const user = await User.findOne({ username });
 
         if (!user) {
@@ -132,7 +132,6 @@ module.exports.createController = async (req, res) => {
             attachment,
             attachment_id,
             user: user._id,
-            open_date,
         });
 
         await defect.save();
