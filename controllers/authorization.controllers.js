@@ -2,19 +2,9 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const Admin = require('../models/Admin');
 const config = require('../config/keys.config');
-const { validationResult } = require('express-validator');
 const error = require('../utils/error-handler.utils');
 
 module.exports.loginController = async (req, res) => {
-    const errors = validationResult(req);
-
-    if (!errors.isEmpty()) {
-        return res.status(400).json({
-            errors: errors.array(),
-            message: 'Incorrect login information',
-        });
-    }
-
     try {
         const { email, password } = req.body;
         const admin = await Admin.findOne({ email });

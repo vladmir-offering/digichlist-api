@@ -10,7 +10,7 @@ const AuthorizationRouter = require('./routes/authorization.routes');
 const AdminRouter = require('./routes/admin.routes');
 const UserRouter = require('./routes/user.routes');
 const DefectRouter = require('./routes/defect.routes');
-const ChecklistRouter = require('./routes/checklist.routes');
+const OrderRouter = require('./routes/order.routes');
 const errorHandler = require('./middleware/errors.middleware');
 
 const app = express();
@@ -29,7 +29,7 @@ app.use('/api/authorization', AuthorizationRouter);
 app.use('/api/admin', AdminRouter);
 app.use('/api/user', UserRouter);
 app.use('/api/defect', DefectRouter);
-app.use('/api/checklist', ChecklistRouter);
+app.use('/api/order', OrderRouter);
 app.use(errorHandler);
 
 module.exports = app;
