@@ -1,4 +1,5 @@
 const User = require('../models/User');
+const { validationResult } = require('express-validator');
 const error = require('../utils/error-handler.utils');
 
 module.exports.getAllController = async (req, res) => {
@@ -54,6 +55,15 @@ module.exports.getByIdController = async (req, res) => {
 };
 
 module.exports.createController = async (req, res) => {
+    const errors = validationResult(req);
+
+    if (!errors.isEmpty()) {
+        return res.status(400).json({
+            errors: errors.array(),
+            message: 'Incorrect user data',
+        });
+    }
+
     try {
         const { first_name, last_name, username, chat_id } = req.body;
 
@@ -77,6 +87,15 @@ module.exports.createController = async (req, res) => {
 };
 
 module.exports.updateController = async (req, res) => {
+    const errors = validationResult(req);
+
+    if (!errors.isEmpty()) {
+        return res.status(400).json({
+            errors: errors.array(),
+            message: 'Incorrect user data',
+        });
+    }
+
     try {
         const updated = new User({
             first_name: req.body.first_name,

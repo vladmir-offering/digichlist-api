@@ -1,10 +1,11 @@
 const { Router } = require('express');
 const passport = require('passport');
+const { userValidators } = require('../utils/validators.utils');
 const userControllers = require('../controllers/user.controllers');
 const router = Router();
 
 // POST http://localhost:5000/api/user/create
-router.post('/create', userControllers.createController);
+router.post('/create', userValidators, userControllers.createController);
 
 // GET Protected JWT Web Token http://localhost:5000/api/user/all
 router.get(
@@ -31,7 +32,7 @@ router.get(
 );
 
 // PATCH http://localhost:5000/api/user/update/:id
-router.patch('/update/:id', userControllers.updateController);
+router.patch('/update/:id', userValidators, userControllers.updateController);
 
 // DELETE Protected JWT Web Token http://localhost:5000/api/user/delete/:id
 router.delete(

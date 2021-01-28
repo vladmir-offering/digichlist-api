@@ -1,13 +1,14 @@
 const { Router } = require('express');
 const passport = require('passport');
+const { defectValidators } = require('../utils/validators.utils');
 const defectControllers = require('../controllers/defect.controllers');
 const router = Router();
 
 // POST http://localhost:5000/api/defect/create
-router.post('/create', defectControllers.createController);
+router.post('/create', defectValidators, defectControllers.createController);
 
 // PATCH Protected JWT Web Token http://localhost:5000/api/defect/update/:id
-router.patch('/update/:id', defectControllers.updateController);
+router.patch('/update/:id', defectValidators, defectControllers.updateController);
 
 // GET Protected JWT Web Token http://localhost:5000/api/defect/getById/:id
 router.get(
@@ -33,11 +34,11 @@ router.get(
     defectControllers.getByStatusController,
 );
 
-// GET Protected JWT Web Token http://localhost:5000/api/defect/:userId
+// GET Protected JWT Web Token http://localhost:5000/api/defect/getByUserId/:userId
 router.get(
-    '/:userId',
+    '/getByUserId/:userId',
     passport.authenticate('jwt', { session: false }),
-    defectControllers.getByUserController,
+    defectControllers.getByUserIdController,
 );
 
 // DELETE Protected JWT Web Token http://localhost:5000/api/defect/deleteByDateAndStatus?status=DefectStatus&date_type=open_date/close_date&start=StartDate&end=EndDate

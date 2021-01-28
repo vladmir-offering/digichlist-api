@@ -1,0 +1,191 @@
+const { body } = require('express-validator');
+
+exports.loginValidators = [
+    body('email')
+        .notEmpty()
+        .withMessage('Email is required')
+        .isEmail()
+        .withMessage('Enter correct email')
+        .isString()
+        .withMessage('Email must be type string')
+        .matches(
+            /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
+        )
+        .withMessage('Not correct email regex!')
+        .normalizeEmail()
+        .trim(),
+    body('password')
+        .notEmpty()
+        .withMessage('Password is required')
+        .isString()
+        .withMessage('Password must be type string')
+        .isLength({ min: 8 })
+        .withMessage('Not correct password. Minimum length 8 symbols')
+        .matches(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/)
+        .withMessage('Not correct password regex')
+        .trim(),
+];
+
+exports.registrationCreateValidators = [
+    body('email')
+        .notEmpty()
+        .withMessage('Email is required')
+        .isEmail()
+        .withMessage('Enter correct email')
+        .isString()
+        .withMessage('Email must be type string')
+        .matches(
+            /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
+        )
+        .withMessage('Not correct email regex!')
+        .normalizeEmail()
+        .trim(),
+    body('username')
+        .notEmpty()
+        .withMessage('Username is required')
+        .isString()
+        .withMessage('Username must be type string')
+        .isLength({ min: 5, max: 20 })
+        .withMessage('Not correct username. Minimum length 5 symbols')
+        .matches(/^(?=[a-zA-Z0-9._]{6,20}$)(?!.*[_.]{2})[^_.].*[^_.]$/)
+        .withMessage('Not correct username regex')
+        .trim(),
+    body('password')
+        .notEmpty()
+        .withMessage('Password is required')
+        .isString()
+        .withMessage('Password must be type string')
+        .isLength({ min: 8 })
+        .withMessage('Not correct password. Minimum length 8 symbols')
+        .matches(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/)
+        .withMessage('Not correct password regex')
+        .trim(),
+];
+
+exports.registrationUpdateValidators = [
+    body('email')
+        .notEmpty()
+        .withMessage('Email is required')
+        .isEmail()
+        .withMessage('Enter correct email')
+        .isString()
+        .withMessage('Email must be type string')
+        .matches(
+            /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
+        )
+        .withMessage('Not correct email regex!')
+        .normalizeEmail()
+        .trim(),
+    body('username')
+        .notEmpty()
+        .withMessage('Username is required')
+        .isString()
+        .withMessage('Username must be type string')
+        .isLength({ min: 5, max: 20 })
+        .withMessage('Not correct username. Minimum length 5 symbols')
+        .matches(/^(?=[a-zA-Z0-9._]{6,20}$)(?!.*[_.]{2})[^_.].*[^_.]$/)
+        .withMessage('Not correct username regex')
+        .trim(),
+    body('password')
+        .notEmpty()
+        .withMessage('Password is required')
+        .isString()
+        .withMessage('Password must be type string')
+        .isLength({ min: 8 })
+        .withMessage('Not correct password. Minimum length 8 symbols')
+        .trim(),
+];
+
+exports.userValidators = [
+    body('first_name')
+        .isString()
+        .withMessage('First name must be type string')
+        .isLength({ min: 1, max: 20 })
+        .withMessage('Min title length is 1 symbols. Max - 20 symbols')
+        .trim(),
+    body('username')
+        .notEmpty()
+        .withMessage('Username is required')
+        .isString()
+        .withMessage('Username must be type string')
+        .isLength({ min: 5, max: 20 })
+        .withMessage('Min title length is 5 symbols. Max - 20 symbols')
+        .trim(),
+    body('last_name')
+        .isString()
+        .withMessage('Last name must be type string')
+        .isLength({ min: 1, max: 20 })
+        .withMessage('Min title length is 1 symbols. Max - 20 symbols')
+        .trim(),
+    body('chat_id')
+        .notEmpty()
+        .withMessage('Username is required')
+        .isString()
+        .withMessage('Username must be type string')
+        .trim(),
+    body('enabled').isBoolean().withMessage('Enabled must be boolean type').trim(),
+    body('position')
+        .isString()
+        .withMessage('Position must be type string')
+        .equals('Cleaner' || 'Repairer' || 'None')
+        .withMessage(
+            'The position field can only contain the following values - Cleaner, Repairer, None',
+        )
+        .trim(),
+];
+
+exports.defectValidators = [
+    body('title')
+        .notEmpty()
+        .withMessage('Title is required')
+        .isString()
+        .withMessage('Title must be type string')
+        .isLength({ min: 5, max: 50 })
+        .withMessage('Min title length is 5 symbols. Max - 50 symbols')
+        .trim(),
+    body('room')
+        .notEmpty()
+        .withMessage('Room is required')
+        .isString()
+        .withMessage('Room must be type string')
+        .isLength({ min: 1, max: 20 })
+        .withMessage('Min room length is 1 symbols. Max - 20 symbols')
+        .trim(),
+    body('status')
+        .isString()
+        .withMessage('Status must be type string')
+        .equals('open' || 'fixing' || 'solved')
+        .withMessage(
+            'The status field can only contain the following values - open, fixing, solved',
+        )
+        .trim(),
+    body('open_date').isDate().withMessage('Date must be in format 2021-01-01').trim(),
+    body('close_reason')
+        .isString()
+        .withMessage('Close reason must be type string')
+        .isLength({ min: 5, max: 100 })
+        .withMessage('Min room length is 5 symbols. Max - 100 symbols')
+        .trim(),
+    body('priority').isNumeric().withMessage('Priority must be type number').trim(),
+    body('close_date').isDate().withMessage('Date must be in format 2021-01-01').trim(),
+];
+
+exports.orderValidators = [
+    body('title')
+        .notEmpty()
+        .withMessage('Title is required')
+        .isString()
+        .withMessage('Title must be type string')
+        .isLength({ min: 5, max: 50 })
+        .withMessage('Min title length is 5 symbols. Max - 50 symbols')
+        .trim(),
+    body('note')
+        .isString()
+        .withMessage('Note must be type string')
+        .isLength({ min: 5 })
+        .withMessage('Min note length is 5 symbols')
+        .trim(),
+    body('quantity').isNumeric().withMessage('Quantity must be type number').trim(),
+    body('date').isDate().withMessage('Date must be in format 2021-01-01').trim(),
+    body('done').isBoolean().withMessage('Done must be boolean type').trim(),
+];
