@@ -169,11 +169,12 @@ module.exports.updateController = async (req, res) => {
             priority,
             close_reason,
             admin_username,
+            username,
             user,
         } = req.body;
 
         if (user && !admin_username) {
-            const repairer = await User.findOne({ _id: user });
+            const repairer = await User.findOne({ username });
 
             if (!repairer) {
                 return res.status(404).json({
