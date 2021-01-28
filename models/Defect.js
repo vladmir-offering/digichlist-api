@@ -28,7 +28,7 @@ const defectSchema = new Schema({
     },
     close_reason: {
         type: String,
-        default: '',
+        default: 'Defect not yet fixed',
     },
     priority: {
         type: Number,
@@ -42,7 +42,7 @@ const defectSchema = new Schema({
     },
     close_date: {
         type: Date,
-        default: '',
+        default: Date.UTC,
     },
 });
 

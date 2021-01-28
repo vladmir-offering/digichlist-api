@@ -145,7 +145,12 @@ exports.defectValidators = [
         .withMessage('Min room length is 1 symbols. Max - 20 symbols')
         .trim(),
     body('status').isString().withMessage('Status must be type string').trim(),
-    body('open_date').isDate().withMessage('Date must be in format 2021-01-01').trim(),
+    body('open_date')
+        .matches(
+            /^([\+-]?\d{4}(?!\d{2}\b))((-?)((0[1-9]|1[0-2])(\3([12]\d|0[1-9]|3[01]))?|W([0-4]\d|5[0-2])(-?[1-7])?|(00[1-9]|0[1-9]\d|[12]\d{2}|3([0-5]\d|6[1-6])))([T\s]((([01]\d|2[0-3])((:?)[0-5]\d)?|24\:?00)([\.,]\d+(?!:))?)?(\17[0-5]\d([\.,]\d+)?)?([zZ]|([\+-])([01]\d|2[0-3]):?([0-5]\d)?)?)?)?$/,
+        )
+        .withMessage('Date must be in format 2021-01-01 00:00:00')
+        .trim(),
     body('close_reason')
         .isString()
         .withMessage('Close reason must be type string')
@@ -153,7 +158,12 @@ exports.defectValidators = [
         .withMessage('Min room length is 5 symbols. Max - 100 symbols')
         .trim(),
     body('priority').isNumeric().withMessage('Priority must be type number').trim(),
-    body('close_date').isDate().withMessage('Date must be in format 2021-01-01').trim(),
+    body('close_date')
+        .matches(
+            /^([\+-]?\d{4}(?!\d{2}\b))((-?)((0[1-9]|1[0-2])(\3([12]\d|0[1-9]|3[01]))?|W([0-4]\d|5[0-2])(-?[1-7])?|(00[1-9]|0[1-9]\d|[12]\d{2}|3([0-5]\d|6[1-6])))([T\s]((([01]\d|2[0-3])((:?)[0-5]\d)?|24\:?00)([\.,]\d+(?!:))?)?(\17[0-5]\d([\.,]\d+)?)?([zZ]|([\+-])([01]\d|2[0-3]):?([0-5]\d)?)?)?)?$/,
+        )
+        .withMessage('Date must be in format 2021-01-01 00:00:00')
+        .trim(),
 ];
 
 exports.orderValidators = [
@@ -162,8 +172,8 @@ exports.orderValidators = [
         .withMessage('Title is required')
         .isString()
         .withMessage('Title must be type string')
-        .isLength({ min: 5, max: 50 })
-        .withMessage('Min title length is 5 symbols. Max - 50 symbols')
+        .isLength({ min: 2, max: 50 })
+        .withMessage('Min title length is 2 symbols. Max - 50 symbols')
         .trim(),
     body('note')
         .isString()
@@ -172,6 +182,11 @@ exports.orderValidators = [
         .withMessage('Min note length is 5 symbols')
         .trim(),
     body('quantity').isNumeric().withMessage('Quantity must be type number').trim(),
-    body('date').isDate().withMessage('Date must be in format 2021-01-01').trim(),
+    body('date')
+        .matches(
+            /^([\+-]?\d{4}(?!\d{2}\b))((-?)((0[1-9]|1[0-2])(\3([12]\d|0[1-9]|3[01]))?|W([0-4]\d|5[0-2])(-?[1-7])?|(00[1-9]|0[1-9]\d|[12]\d{2}|3([0-5]\d|6[1-6])))([T\s]((([01]\d|2[0-3])((:?)[0-5]\d)?|24\:?00)([\.,]\d+(?!:))?)?(\17[0-5]\d([\.,]\d+)?)?([zZ]|([\+-])([01]\d|2[0-3]):?([0-5]\d)?)?)?)?$/,
+        )
+        .withMessage('Date must be in format 2021-01-01 00:00:00')
+        .trim(),
     body('done').isBoolean().withMessage('Done must be boolean type').trim(),
 ];
