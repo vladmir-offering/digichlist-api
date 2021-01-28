@@ -1,13 +1,17 @@
 const { Schema, model } = require('mongoose');
 
-const checklistSchema = new Schema({
-    checklist: {
-        type: Number,
+const orderSchema = new Schema({
+    title: {
+        type: String,
         required: true,
     },
     note: {
         type: String,
-        required: true,
+        default: '',
+    },
+    quantity: {
+        type: Number,
+        default: 0,
     },
     date: {
         type: Date,
@@ -17,20 +21,10 @@ const checklistSchema = new Schema({
         ref: 'User',
         type: Schema.Types.ObjectId,
     },
-    list: [
-        {
-            name: {
-                type: String,
-            },
-            quantity: {
-                type: Number,
-            },
-        },
-    ],
     done: {
         type: Boolean,
         default: false,
     },
 });
 
-module.exports = model('Checklist', checklistSchema);
+module.exports = model('Order', orderSchema);
