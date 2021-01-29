@@ -1,17 +1,17 @@
 const { Router } = require('express');
 const passport = require('passport');
-const { orderValidators } = require('../utils/validators.utils');
+const { orderCreateValidators, orderUpdateValidators } = require('../utils/validators.utils');
 const orderControllers = require('../controllers/order.controllers');
 const router = Router();
 
 // POST http://localhost:5000/api/order/create
-router.post('/create', orderValidators, orderControllers.createController);
+router.post('/create', orderCreateValidators, orderControllers.createController);
 
 // PATCH Protected JWT Web Token http://localhost:5000/api/order/update/:id
 router.patch(
     '/update/:id',
     passport.authenticate('jwt', { session: false }),
-    orderValidators,
+    orderUpdateValidators,
     orderControllers.updateController,
 );
 

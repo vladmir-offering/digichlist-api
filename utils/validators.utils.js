@@ -96,12 +96,12 @@ exports.registrationUpdateValidators = [
         .trim(),
 ];
 
-exports.userValidators = [
+exports.userCreateValidators = [
     body('first_name')
         .isString()
         .withMessage('First name must be type string')
         .isLength({ min: 1, max: 20 })
-        .withMessage('Min title length is 1 symbols. Max - 20 symbols')
+        .withMessage('Min first name length is 1 symbols. Max - 20 symbols')
         .trim(),
     body('username')
         .notEmpty()
@@ -109,25 +109,82 @@ exports.userValidators = [
         .isString()
         .withMessage('Username must be type string')
         .isLength({ min: 5, max: 20 })
-        .withMessage('Min title length is 5 symbols. Max - 20 symbols')
+        .withMessage('Min username length is 5 symbols. Max - 20 symbols')
         .trim(),
     body('last_name')
         .isString()
         .withMessage('Last name must be type string')
         .isLength({ min: 1, max: 20 })
-        .withMessage('Min title length is 1 symbols. Max - 20 symbols')
+        .withMessage('Min last name length is 1 symbols. Max - 20 symbols')
         .trim(),
     body('chat_id')
         .notEmpty()
         .withMessage('Username is required')
         .isString()
         .withMessage('Username must be type string')
+        .isLength({ min: 5, max: 20 })
+        .withMessage('Min chat id length is 5 symbols. Max - 20 symbols')
         .trim(),
-    body('enabled').isBoolean().withMessage('Enabled must be boolean type').trim(),
-    body('position').isString().withMessage('Position must be type string').trim(),
 ];
 
-exports.defectValidators = [
+exports.userUpdateValidators = [
+    body('first_name')
+        .isString()
+        .withMessage('First name must be type string')
+        .isLength({ min: 1, max: 20 })
+        .withMessage('Min first name length is 1 symbols. Max - 20 symbols')
+        .trim(),
+    body('username')
+        .notEmpty()
+        .withMessage('Username is required')
+        .isString()
+        .withMessage('Username must be type string')
+        .isLength({ min: 5, max: 20 })
+        .withMessage('Min username length is 5 symbols. Max - 20 symbols')
+        .trim(),
+    body('last_name')
+        .isString()
+        .withMessage('Last name must be type string')
+        .isLength({ min: 1, max: 20 })
+        .withMessage('Min last name length is 1 symbols. Max - 20 symbols')
+        .trim(),
+    body('chat_id')
+        .notEmpty()
+        .withMessage('Username is required')
+        .isString()
+        .withMessage('Username must be type string')
+        .isLength({ min: 5, max: 20 })
+        .withMessage('Min chat id length is 5 symbols. Max - 20 symbols')
+        .trim(),
+    body('enabled').isBoolean().withMessage('Enabled must be boolean type').trim(),
+    body('position')
+        .notEmpty()
+        .withMessage('Position is required')
+        .isString()
+        .withMessage('Position must be type string')
+        .trim(),
+];
+
+exports.defectCreateValidators = [
+    body('title')
+        .notEmpty()
+        .withMessage('Title is required')
+        .isString()
+        .withMessage('Title must be type string')
+        .isLength({ min: 5, max: 50 })
+        .withMessage('Min title length is 5 symbols. Max - 50 symbols')
+        .trim(),
+    body('room')
+        .notEmpty()
+        .withMessage('Room is required')
+        .isString()
+        .withMessage('Room must be type string')
+        .isLength({ min: 1, max: 20 })
+        .withMessage('Min room length is 1 symbols. Max - 20 symbols')
+        .trim(),
+];
+
+exports.defectUpdateValidators = [
     body('title')
         .notEmpty()
         .withMessage('Title is required')
@@ -166,7 +223,25 @@ exports.defectValidators = [
         .trim(),
 ];
 
-exports.orderValidators = [
+exports.orderCreateValidators = [
+    body('title')
+        .notEmpty()
+        .withMessage('Title is required')
+        .isString()
+        .withMessage('Title must be type string')
+        .isLength({ min: 2, max: 50 })
+        .withMessage('Min title length is 2 symbols. Max - 50 symbols')
+        .trim(),
+    body('note')
+        .isString()
+        .withMessage('Note must be type string')
+        .isLength({ min: 5 })
+        .withMessage('Min note length is 5 symbols')
+        .trim(),
+    body('quantity').isNumeric().withMessage('Quantity must be type number').trim(),
+];
+
+exports.orderUpdateValidators = [
     body('title')
         .notEmpty()
         .withMessage('Title is required')

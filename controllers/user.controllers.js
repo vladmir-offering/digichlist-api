@@ -30,7 +30,7 @@ module.exports.getByUsernameController = async (req, res) => {
 
 module.exports.getByPositionController = async (req, res) => {
     try {
-        const users = await User.findOne({ position: req.params.position.toString() });
+        const users = await User.find({ position: req.params.position.toString() });
         res.status(200).json({
             response: 'ok',
             message: users.length ? 'Users found' : 'No users',
