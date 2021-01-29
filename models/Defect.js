@@ -42,7 +42,6 @@ const defectSchema = new Schema({
     },
     close_date: {
         type: Date,
-        default: Date.UTC,
     },
 });
 
