@@ -1,11 +1,11 @@
 const { Router } = require('express');
 const passport = require('passport');
-const { userValidators } = require('../utils/validators.utils');
+const { userCreateValidators, userUpdateValidators } = require('../utils/validators.utils');
 const userControllers = require('../controllers/user.controllers');
 const router = Router();
 
 // POST http://localhost:5000/api/user/create
-router.post('/create', userValidators, userControllers.createController);
+router.post('/create', userCreateValidators, userControllers.createController);
 
 // GET Protected JWT Web Token http://localhost:5000/api/user/all
 router.get(
@@ -18,11 +18,7 @@ router.get(
 router.get('/getByUsername/:username', userControllers.getByUsernameController);
 
 // GET http://localhost:5000/api/user/getByPosition/:position
-router.get(
-    '/getByPosition/:position',
-    passport.authenticate('jwt', { session: false }),
-    userControllers.getByPositionController,
-);
+router.get('/getByPosition/:position', userControllers.getByPositionController);
 
 // GET Protected JWT Web Token http://localhost:5000/api/user/getById/:id
 router.get(
@@ -32,7 +28,7 @@ router.get(
 );
 
 // PATCH http://localhost:5000/api/user/update/:id
-router.patch('/update/:id', userValidators, userControllers.updateController);
+router.patch('/update/:id', userUpdateValidators, userControllers.updateController);
 
 // DELETE Protected JWT Web Token http://localhost:5000/api/user/delete/:id
 router.delete(
