@@ -111,17 +111,11 @@ exports.userCreateValidators = [
         .isLength({ min: 5, max: 20 })
         .withMessage('Min username length is 5 symbols. Max - 20 symbols')
         .trim(),
-    body('last_name')
-        .isString()
-        .withMessage('Last name must be type string')
-        .isLength({ min: 1, max: 20 })
-        .withMessage('Min last name length is 1 symbols. Max - 20 symbols')
-        .trim(),
     body('chat_id')
         .notEmpty()
-        .withMessage('Username is required')
+        .withMessage('Chat id is required')
         .isString()
-        .withMessage('Username must be type string')
+        .withMessage('Chat id must be type string')
         .isLength({ min: 5, max: 20 })
         .withMessage('Min chat id length is 5 symbols. Max - 20 symbols')
         .trim(),

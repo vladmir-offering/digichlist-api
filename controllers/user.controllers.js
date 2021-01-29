@@ -69,10 +69,11 @@ module.exports.createController = async (req, res) => {
 
         const user = new User({
             first_name,
-            last_name,
             username,
             chat_id,
         });
+
+        last_name ? (user.last_name = last_name) : null;
 
         await user.save();
 
