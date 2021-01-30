@@ -22,7 +22,7 @@ module.exports.getByIdController = async (req, res) => {
         const defect = await Defect.findById(req.params.id);
         res.status(200).json({
             response: 'ok',
-            message: defect.length ? 'Defect found' : 'No defect',
+            message: defect ? 'Defect found' : 'No defect',
             defect,
         });
     } catch (e) {
@@ -169,6 +169,7 @@ module.exports.updateController = async (req, res) => {
             close_reason,
             admin_username,
             username,
+            comments,
             user,
         } = req.body;
 
@@ -216,6 +217,7 @@ module.exports.updateController = async (req, res) => {
             attachment_id,
             user,
             status,
+            comments,
             priority,
             close_date,
             close_reason,
