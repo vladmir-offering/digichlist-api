@@ -1,6 +1,11 @@
 const { Schema, model } = require('mongoose');
+const shortid = require('shortid');
 
 const defectSchema = new Schema({
+    _id: {
+        type: String,
+        default: shortid.generate,
+    },
     title: {
         type: String,
         required: true,
@@ -9,6 +14,28 @@ const defectSchema = new Schema({
         type: String,
         required: true,
     },
+    comments: [
+        {
+            _id: {
+                type: String,
+                default: shortid.generate,
+            },
+            user: {
+                ref: 'User',
+                type: Schema.Types.ObjectId,
+            },
+            username: {
+                type: String,
+                required: true,
+                default: '',
+            },
+            message: {
+                type: String,
+                required: true,
+                default: '',
+            },
+        },
+    ],
     attachment: {
         type: String,
         default: '',
