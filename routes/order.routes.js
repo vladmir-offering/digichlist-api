@@ -7,13 +7,8 @@ const router = Router();
 // POST http://localhost:5000/api/order/create
 router.post('/create', orderCreateValidators, orderControllers.createController);
 
-// PATCH Protected JWT Web Token http://localhost:5000/api/order/update/:id
-router.patch(
-    '/update/:id',
-    passport.authenticate('jwt', { session: false }),
-    orderUpdateValidators,
-    orderControllers.updateController,
-);
+// PATCH http://localhost:5000/api/order/update/:id
+router.patch('/update/:id', orderUpdateValidators, orderControllers.updateController);
 
 // DELETE Protected JWT Web Token http://localhost:5000/api/order/delete/:id
 router.delete(
@@ -22,6 +17,9 @@ router.delete(
     orderControllers.removeController,
 );
 
+// GET http://localhost:5000/api/order/getByDateAndDone?done=true/false&start=StartDate&end=EndDate
+router.get('/getByDateAndDone', orderControllers.getByDateAndDoneController);
+
 // DELETE Protected JWT Web Token http://localhost:5000/api/order/deleteDoneByDate?start=StartDate&end=EndDate
 router.delete(
     '/deleteDoneByDate',
@@ -29,14 +27,33 @@ router.delete(
     orderControllers.removeDoneByDateController,
 );
 
-// GET http://localhost:5000/api/order/getByUsername/:username
-router.get('/getByUsername/:username', orderControllers.getByUsernameController);
+// GET Protected JWT Web Token http://localhost:5000/api/order/getByUsername/:username
+router.get(
+    '/getByUsername/:username',
+    passport.authenticate('jwt', { session: false }),
+    orderControllers.getByUsernameController,
+);
 
-// GET http://localhost:5000/api/order/getById/:id
-router.get('/getById/:id', orderControllers.getByIdController);
+// GET Protected JWT Web Token http://localhost:5000/api/order/getById/:id
+router.get(
+    '/getById/:id',
+    passport.authenticate('jwt', { session: false }),
+    orderControllers.getByIdController,
+);
 
-// GET http://localhost:5000/api/order/all?start=StartDate&end=EndDate
-router.get('/all', orderControllers.getAllController);
+// GET Protected JWT Web Token http://localhost:5000/api/order/getByDone?done=true/false
+router.get(
+    '/getByDone',
+    passport.authenticate('jwt', { session: false }),
+    orderControllers.getByDoneController,
+);
+
+// GET Protected JWT Web Token  http://localhost:5000/api/order/all
+router.get(
+    '/all',
+    passport.authenticate('jwt', { session: false }),
+    orderControllers.getAllController,
+);
 
 // GET Protected JWT Web Token http://localhost:5000/api/order/getByUserId/:userId
 router.get(

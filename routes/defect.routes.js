@@ -7,7 +7,7 @@ const router = Router();
 // POST http://localhost:5000/api/defect/create
 router.post('/create', defectCreateValidators, defectControllers.createController);
 
-// PATCH Protected JWT Web Token http://localhost:5000/api/defect/update/:id
+// PATCH http://localhost:5000/api/defect/update/:id
 router.patch('/update/:id', defectUpdateValidators, defectControllers.updateController);
 
 // GET Protected JWT Web Token http://localhost:5000/api/defect/getById/:id

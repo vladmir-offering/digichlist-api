@@ -1,11 +1,27 @@
 const Order = require('../models/Order');
 const User = require('../models/User');
+const Admin = require('../models/Admin');
 const { validationResult } = require('express-validator');
 const error = require('../utils/error-handler.utils');
 
 module.exports.getAllController = async (req, res) => {
     try {
-        const query = {};
+        const orders = await Order.find({});
+        res.status(200).json({
+            response: 'ok',
+            message: orders.length ? 'Orders found' : 'No orders',
+            orders,
+        });
+    } catch (e) {
+        error(res, e);
+    }
+};
+
+module.exports.getByDateAndDoneController = async (req, res) => {
+    try {
+        const query = {
+            done: req.query.done,
+        };
 
         if (req.query.start) {
             query.date = {
@@ -37,8 +53,21 @@ module.exports.getByIdController = async (req, res) => {
         const order = await Order.findById(req.params.id);
         res.status(200).json({
             response: 'ok',
-            message: order.length ? 'Order found' : 'No order',
+            message: order ? 'Order found' : 'No order',
             order,
+        });
+    } catch (e) {
+        error(res, e);
+    }
+};
+
+module.exports.getByDoneController = async (req, res) => {
+    try {
+        const orders = await Order.find({ done: req.query.done });
+        res.status(200).json({
+            response: 'ok',
+            message: orders.length ? 'Orders found' : 'No orders',
+            orders,
         });
     } catch (e) {
         error(res, e);
@@ -135,7 +164,44 @@ module.exports.updateController = async (req, res) => {
     }
 
     try {
-        const { title, note, quantity, date, user, done } = req.body;
+        const { title, note, quantity, date, user, done, admin_username, username } = req.body;
+
+        if (username && user && !admin_username) {
+            const merchandiser = await User.findOne({ username });
+
+            if (!merchandiser) {
+                return res.status(404).json({
+                    response: 'noUser',
+                    message:
+                        'The user is not in the system. To update the order information, you must register and gain access.',
+                });
+            }
+
+            if (merchandiser && merchandiser.position !== 'Merchandiser') {
+                return res.status(403).json({
+                    response: 'notRepairer',
+                    message: 'This user is not in a position to update the order information',
+                });
+            }
+
+            if (merchandiser && !merchandiser.enabled) {
+                return res.status(403).json({
+                    response: 'noAccess',
+                    message: 'This user does not have access to update the order information',
+                });
+            }
+        }
+
+        if (user && admin_username) {
+            const admin = await Admin.findOne({ username: admin_username });
+
+            if (!admin) {
+                return res.status(401).json({
+                    response: 'noAccess',
+                    message: 'This user does not have access to update the order information',
+                });
+            }
+        }
 
         const updated = new Order({
             user,

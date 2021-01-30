@@ -31,12 +31,8 @@ module.exports.getByIdController = async (req, res) => {
 };
 
 module.exports.getByStatusController = async (req, res) => {
-    const query = {
-        status: req.query.status,
-    };
-
     try {
-        const defects = await Defect.find(query);
+        const defects = await Defect.find({ status: req.query.status });
         res.status(200).json({
             response: 'ok',
             message: defects.length
@@ -173,7 +169,7 @@ module.exports.updateController = async (req, res) => {
             user,
         } = req.body;
 
-        if (user && !admin_username) {
+        if (username && user && !admin_username) {
             const repairer = await User.findOne({ username });
 
             if (!repairer) {
@@ -199,7 +195,7 @@ module.exports.updateController = async (req, res) => {
             }
         }
 
-        if (user && admin_username) {
+        if (!username && user && admin_username) {
             const admin = await Admin.findOne({ username: admin_username });
 
             if (!admin) {

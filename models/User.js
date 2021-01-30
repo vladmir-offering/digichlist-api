@@ -16,7 +16,7 @@ const userSchema = new Schema({
     },
     position: {
         type: String,
-        enum: ['Cleaner', 'Repairer', 'None'],
+        enum: ['Cleaner', 'Repairer', 'Merchandiser', 'None'],
         default: 'None',
     },
     chat_id: {
