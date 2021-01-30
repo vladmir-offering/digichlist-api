@@ -22,6 +22,13 @@ router.get(
     adminControllers.getAllController,
 );
 
+// GET Protected JWT Web Token http://localhost:5000/api/admin/getByUsername/:username
+router.get(
+    '/getByUsername/:username',
+    passport.authenticate('jwt', { session: false }),
+    adminControllers.getByUsernameController,
+);
+
 // GET Protected JWT Web Token http://localhost:5000/api/admin/getById/:id
 router.get(
     '/getById/:id',

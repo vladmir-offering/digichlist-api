@@ -25,6 +25,19 @@ module.exports.getAllController = async (req, res) => {
     }
 };
 
+module.exports.getByUsernameController = async (req, res) => {
+    try {
+        const admin = await Admin.findOne({ username: req.params.username.toString() });
+        res.status(200).json({
+            response: 'ok',
+            message: admin ? 'Admin found' : 'No admin',
+            admin,
+        });
+    } catch (e) {
+        error(res, e);
+    }
+};
+
 module.exports.getByIdController = async (req, res) => {
     try {
         const admin = await Admin.findById(req.params.id);
