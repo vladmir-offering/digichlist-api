@@ -22,6 +22,7 @@ const userSchema = new Schema({
     chat_id: {
         type: String,
         required: true,
+        unique: true,
     },
     enabled: {
         type: Boolean,
