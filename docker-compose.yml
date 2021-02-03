@@ -13,8 +13,9 @@ services:
     links:
       - mongo
     environment:
+      - NODE_ENV=
       - PORT=
-      - MONGO_URI=mongodb://mongo:27017/
+      - MONGO_URI=
       - JWT=
 
   mongo:

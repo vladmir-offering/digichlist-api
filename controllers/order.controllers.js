@@ -192,7 +192,7 @@ module.exports.updateController = async (req, res) => {
             }
         }
 
-        if (user && admin_username) {
+        if (!username && user && admin_username) {
             const admin = await Admin.findOne({ username: admin_username });
 
             if (!admin) {
