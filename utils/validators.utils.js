@@ -173,8 +173,8 @@ exports.defectCreateValidators = [
         .withMessage('Room is required')
         .isString()
         .withMessage('Room must be type string')
-        .isLength({ min: 1, max: 10 })
-        .withMessage('Min room length is 1 symbols. Max - 10 symbols')
+        .isLength({ min: 1, max: 20 })
+        .withMessage('Min room length is 1 symbols. Max - 20 symbols')
         .trim(),
 ];
 
@@ -192,8 +192,8 @@ exports.defectUpdateValidators = [
         .withMessage('Room is required')
         .isString()
         .withMessage('Room must be type string')
-        .isLength({ min: 1, max: 10 })
-        .withMessage('Min room length is 1 symbols. Max - 10 symbols')
+        .isLength({ min: 1, max: 20 })
+        .withMessage('Min room length is 1 symbols. Max - 20 symbols')
         .trim(),
     body('status').isString().withMessage('Status must be type string').trim(),
     body('open_date')
