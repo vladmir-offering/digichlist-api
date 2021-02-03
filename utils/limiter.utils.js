@@ -1,6 +1,6 @@
 const rateLimit = require('express-rate-limit');
 const MongoStore = require('rate-limit-mongo');
-const config = require('./config/keys.config');
+const config = require('../config/keys.config');
 
 module.exports.limiter = rateLimit({
     store: new MongoStore({
