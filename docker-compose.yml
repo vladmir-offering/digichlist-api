@@ -1,0 +1,29 @@
+version: '3'
+
+volumes:
+  mongodb_volume:
+
+services:
+  server:
+    container_name: node-digichlist-api
+    restart: always
+    build: .
+    ports:
+      - '5000:5000'
+    links:
+      - mongo
+    environment:
+      - NODE_ENV=
+      - PORT=
+      - MONGO_URI=
+      - JWT=
+
+  mongo:
+    container_name: digichlist-api-mongo
+    hostname: mongo
+    image: mongo
+    volumes:
+      - mongodb_volume:/data/db
+    restart: always
+    ports:
+      - "27017:27017"
