@@ -41,12 +41,8 @@ router.get(
     orderControllers.getByIdController,
 );
 
-// GET Protected JWT Web Token http://localhost:5000/api/order/getByDone?done=true/false
-router.get(
-    '/getByDone',
-    passport.authenticate('jwt', { session: false }),
-    orderControllers.getByDoneController,
-);
+// GET http://localhost:5000/api/order/getByDone?done=true/false
+router.get('/getByDone', orderControllers.getByDoneController);
 
 // GET Protected JWT Web Token  http://localhost:5000/api/order/all
 router.get(

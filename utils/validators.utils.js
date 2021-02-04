@@ -217,8 +217,8 @@ exports.orderCreateValidators = [
         .withMessage('Title is required')
         .isString()
         .withMessage('Title must be type string')
-        .isLength({ min: 5 })
-        .withMessage('Min title length is 5 symbols')
+        .isLength({ min: 3 })
+        .withMessage('Min title length is 3 symbols')
         .trim(),
     body('note')
         .isString()
@@ -235,8 +235,8 @@ exports.orderUpdateValidators = [
         .withMessage('Title is required')
         .isString()
         .withMessage('Title must be type string')
-        .isLength({ min: 5 })
-        .withMessage('Min title length is 5 symbols')
+        .isLength({ min: 3 })
+        .withMessage('Min title length is 3 symbols')
         .trim(),
     body('note')
         .isString()
