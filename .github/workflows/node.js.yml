@@ -38,10 +38,11 @@ jobs:
     - name: Some Bash magic
       run: | 
             cd ..
+            pwd
             tar zcf digichlist-api.tar digichlist-api/ 
-            ls -la 
-            cd digichlist-api
-            ls -la
+            mv digichlist-api.tar digichlist-api/
+
+            pwd
     - name: Upload a Build Artifact
       uses: actions/upload-artifact@v2.2.2
       with: 
