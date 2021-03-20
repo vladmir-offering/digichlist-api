@@ -38,10 +38,10 @@ jobs:
     - run: |
         cd ../
         ls -la
-    #- name: Upload a Build Artifact
-    #  uses: actions/upload-artifact@v2.2.2
-    #  with:
+    - name: Upload a Build Artifact
+      uses: actions/upload-artifact@v2.2.2
+      with: 
+          name: digichlist-api 
            # Artifact name
-     #     name: build
+          path: ../digichlist-api
           # A file, directory or wildcard pattern that describes what to upload
-     #     path: build
