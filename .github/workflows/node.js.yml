@@ -41,12 +41,11 @@ jobs:
             pwd
             tar zcf digichlist-api.tar digichlist-api/ 
             mv digichlist-api.tar digichlist-api/
-
             pwd
-    - name: Upload a Build Artifact
-      uses: actions/upload-artifact@v2.2.2
-      with: 
-          name: digichlist-api.tar 
-           # Artifact name
-          path: digichlist-api.tar
+#    - name: Upload a Build Artifact
+ #     uses: actions/upload-artifact@v2.2.2
+  #    with: 
+   #       name: digichlist-api.tar 
+    #       # Artifact name
+     #     path: digichlist-api.tar
           # A file, directory or wildcard pattern that describes what to upload
